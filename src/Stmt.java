@@ -1,6 +1,6 @@
 public class Stmt {
     private Var stmtVariable;
-    private String stmtType;
+    protected String stmtType;
     private Stmt_list subList;
 
     Stmt(){}

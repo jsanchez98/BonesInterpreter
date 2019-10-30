@@ -10,6 +10,7 @@ public class Parser {
 
     public class NoOp extends Stmt{
         NoOp(){
+            stmtType = "NoStmt";
         }
 
         public String repr(){
@@ -18,11 +19,13 @@ public class Parser {
     }
 
     public Stmt_list parse(){
-        return program();
+        Stmt_list tree = program();
+        return tree;
     }
 
     public void eat(String token_type){
       if (current_token.get_token_type().equals(token_type)){
+          System.out.println(String.format("Eaten token: %s, %s", current_token.get_token_type(), current_token.get_token_string()));
          current_token = Plexer.get_next_token();
       }
       else{
@@ -33,7 +36,7 @@ public class Parser {
    public Stmt_list program(){
       Stmt_list root = compound_statement();
       eat("end");
-      eat("SEMI");
+       eat("SEMI");
       return root;
    }
 
@@ -54,7 +57,7 @@ public class Parser {
         results.add(node);
 
         while (current_token.get_token_type() == "SEMI"){
-           eat("SEMI");
+            eat("SEMI");
             results.add(statement());
         }
         if (current_token.get_token_type() == "ID"){
@@ -110,8 +113,9 @@ public class Parser {
        eat("ZERO");
        eat("do");
        eat("SEMI");
-       Stmt_list list = program();
+       Stmt_list list = compound_statement();
        Stmt stmt = new Stmt("while", var, list);
+       eat("end");
        return stmt;
    }
 

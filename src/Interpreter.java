@@ -10,6 +10,7 @@ public class Interpreter {
 
     public void interpret(){
         Stmt_list Tree = Iparser.parse();
+        System.out.println("Interpreting starts");
         visit_stmt_list(Tree);
     }
 
